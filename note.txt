@@ -1,0 +1,50 @@
+Асинхронные запросы
+Если вы используете асинхронный режим XMLHttpRequest, то после того, как данные будут получены, будет вызвана функция обработчик. Это позволяет браузеру работать нормально пока ваш запрос будет обрабатываться.
+
+
+===============================================================
+
+Пример: отправка запроса и получение файла ответа
+Приведём простейший пример асинхронного запроса XMLHttpRequest.
+
+JS
+Copy to Clipboard
+
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "/bar/foo.txt", true);
+xhr.onload = function (e) {
+  if (xhr.readyState === 4) {
+    if (xhr.status === 200) {
+      console.log(xhr.responseText);
+    } else {
+      console.error(xhr.statusText);
+    }
+  }
+};
+xhr.onerror = function (e) {
+  console.error(xhr.statusText);
+};
+xhr.send(null);
+
+
+===============================================================
+
+Synchronous request
+
+Synchronous XHR often causes hangs on the web. But developers typically don't notice the problem because the hang only manifests during poor network conditions or slow server response. Synchronous XHR is now in deprecation state. Developers are recommended to move away from the API.
+
+All new XHR features such as timeout or abort aren't allowed for synchronous XHR. Doing so would invoke InvalidAccessError.
+
+Example: HTTP synchronous request
+This example demonstrates how to make a simple synchronous request.
+
+JS
+Copy to Clipboard
+
+var request = new XMLHttpRequest();
+request.open('GET', '/bar/foo.txt', false);  // `false` makes the request synchronous
+request.send(null);
+
+if (request.status === 200) {
+  console.log(request.responseText);
+}
